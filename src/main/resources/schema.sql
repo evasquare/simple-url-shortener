@@ -1,0 +1,6 @@
+CREATE TABLE url_data (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    url VARCHAR(400) NOT NULL,
+    shortened_url VARCHAR(400) NOT NULL,
+    PRIMARY KEY (id)
+);
