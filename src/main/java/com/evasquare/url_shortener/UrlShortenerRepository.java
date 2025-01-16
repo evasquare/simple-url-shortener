@@ -1,6 +1,5 @@
 package com.evasquare.url_shortener;
 
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -17,10 +16,10 @@ public class UrlShortenerRepository {
             return null;
         }
 
-        String randomHash = generateRandomHash();
+        String randomHash = Utils.generateRandomHash();
 
         while (findByShortenedUrl(randomHash) != null) {
-            randomHash = generateRandomHash();
+            randomHash = Utils.generateRandomHash();
         }
 
         jdbcTemplate.update("""
@@ -54,7 +53,4 @@ public class UrlShortenerRepository {
         }
     }
 
-    private String generateRandomHash() {
-        return UUID.randomUUID().toString().substring(0, 8);
-    }
 }

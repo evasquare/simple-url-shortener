@@ -15,6 +15,10 @@ public class UrlShortenerController {
 
     @PostMapping("add")
     public ResponseEntity<UrlData> add(@RequestParam String url) {
+        if (Utils.isValidUri(url)) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
         UrlData addedUrl = repository.add(url);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedUrl);
     }
