@@ -2,6 +2,7 @@ package com.evasquare.url_shortener;
 
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -32,17 +33,25 @@ public class UrlShortenerRepository {
     }
 
     public UrlData findByUrl(String url) {
-        return jdbcTemplate.queryForObject("""
-                SELECT * FROM url_data
-                WHERE url = ?;
-                """, new BeanPropertyRowMapper<>(UrlData.class), url);
+        try {
+            return jdbcTemplate.queryForObject("""
+                    SELECT * FROM url_data
+                    WHERE url = ?;
+                    """, new BeanPropertyRowMapper<>(UrlData.class), url);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public UrlData findByShortenedUrl(String shortenedUrl) {
-        return jdbcTemplate.queryForObject("""
-                SELECT * FROM url_data
-                WHERE shortened_url = ?;
-                """, new BeanPropertyRowMapper<>(UrlData.class), shortenedUrl);
+        try {
+            return jdbcTemplate.queryForObject("""
+                    SELECT * FROM url_data
+                    WHERE shortened_url = ?;
+                    """, new BeanPropertyRowMapper<>(UrlData.class), shortenedUrl);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     private String generateRandomHash() {

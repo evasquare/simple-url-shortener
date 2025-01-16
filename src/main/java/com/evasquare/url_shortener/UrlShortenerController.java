@@ -14,19 +14,19 @@ public class UrlShortenerController {
     UrlShortenerRepository repository;
 
     @PostMapping("add")
-    public ResponseEntity<UrlData> addUrlData(@RequestParam String url) {
+    public ResponseEntity<UrlData> add(@RequestParam String url) {
         UrlData addedUrl = repository.add(url);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedUrl);
     }
 
-    @GetMapping("find")
-    public ResponseEntity<UrlData> getUrlData(@RequestParam String url) {
-        UrlData foundUrl = repository.findByUrl(url);
+    @GetMapping("retrieve")
+    public ResponseEntity<UrlData> retrieve(@RequestParam String shortenedUrl) {
+        UrlData foundShortenedUrl = repository.findByShortenedUrl(shortenedUrl);
 
-        if (foundUrl == null) {
+        if (foundShortenedUrl == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
-        return ResponseEntity.ok(foundUrl);
+        return ResponseEntity.ok(foundShortenedUrl);
     }
 }

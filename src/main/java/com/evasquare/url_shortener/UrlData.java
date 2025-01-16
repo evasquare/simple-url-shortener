@@ -4,6 +4,8 @@ public class UrlData {
     private String url;
     private String shortenedUrl;
 
+    public UrlData() {}
+
     public UrlData(String url, String shortenedUrl) {
         this.url = url;
         this.shortenedUrl = shortenedUrl;
