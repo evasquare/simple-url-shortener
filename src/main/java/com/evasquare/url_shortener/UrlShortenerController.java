@@ -18,6 +18,9 @@ public class UrlShortenerController {
         if (!Utils.isValidUrl(url)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
+        if (repository.findByUrl(url) != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
 
         UrlData addedUrl = repository.add(url);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedUrl);
