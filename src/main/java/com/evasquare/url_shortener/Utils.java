@@ -1,14 +1,12 @@
 package com.evasquare.url_shortener;
 
-import java.net.URI;
 import java.util.UUID;
 
 public class Utils {
-    public static boolean isValidUri(String uri) {
-        try {
-            new URI(uri);
+    public static boolean isValidUrl(String url) {
+        if (url.startsWith("http://") || url.startsWith("https://")) {
             return true;
-        } catch (Exception e) {
+        } else {
             return false;
         }
     }
